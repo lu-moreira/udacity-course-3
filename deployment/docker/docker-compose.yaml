@@ -1,0 +1,44 @@
+version: "3"
+services:
+  reverseproxy:
+      image: lmarquesmoreira/reverseproxy
+      ports:
+          - 8080:8080
+      restart: always
+      depends_on:
+        - backend-user
+        - backend-feed     
+  backend-user:
+    image: lmarquesmoreira/udacity-restapi-user
+    volumes:
+      - $HOME/.aws:/root/.aws
+    environment:
+      UDAGRAM_DATABASE_HOST: $UDAGRAM_DATABASE_HOST
+      UDAGRAM_DATABASE_USERNAME: $UDAGRAM_DATABASE_USERNAME 
+      UDAGRAM_DATABASE_PASSWORD: $UDAGRAM_DATABASE_PASSWORD 
+      UDAGRAM_DATABASE_DATABASE: $UDAGRAM_DATABASE_DATABASE 
+      UDAGRAM_DATABASE_DIALECT: $UDAGRAM_DATABASE_DIALECT 
+      UDAGRAM_AWS_REGION: $UDAGRAM_AWS_REGION 
+      UDAGRAM_AWS_PROFILE: $UDAGRAM_AWS_PROFILE
+      UDAGRAM_AWS_MEDIA_BUCKET: $UDAGRAM_AWS_MEDIA_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  backend-feed:
+    image: lmarquesmoreira/udacity-restapi-feed
+    volumes:
+      - $HOME/.aws:/root/.aws
+    environment:
+      UDAGRAM_DATABASE_HOST: $UDAGRAM_DATABASE_HOST
+      UDAGRAM_DATABASE_USERNAME: $UDAGRAM_DATABASE_USERNAME 
+      UDAGRAM_DATABASE_PASSWORD: $UDAGRAM_DATABASE_PASSWORD 
+      UDAGRAM_DATABASE_DATABASE: $UDAGRAM_DATABASE_DATABASE 
+      UDAGRAM_DATABASE_DIALECT: $UDAGRAM_DATABASE_DIALECT 
+      UDAGRAM_AWS_REGION: $UDAGRAM_AWS_REGION 
+      UDAGRAM_AWS_PROFILE: $UDAGRAM_AWS_PROFILE
+      UDAGRAM_AWS_MEDIA_BUCKET: $UDAGRAM_AWS_MEDIA_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  frontend:
+    image: lmarquesmoreira/udacity-frontend:local
+    ports:
+      - "8100:80"

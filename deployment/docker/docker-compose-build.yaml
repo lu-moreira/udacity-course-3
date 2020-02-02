@@ -1,0 +1,18 @@
+version: "3"
+services:
+  reverseproxy:
+    build:
+      context: ../../reverseproxy
+    image: lmarquesmoreira/reverseproxy 
+  backend_user:
+    build:
+      context: ../../udacity-c2-restapi-user
+    image: lmarquesmoreira/udacity-restapi-user
+  backend_feed:
+    build:
+      context: ../../udacity-c2-restapi-feed  
+    image: lmarquesmoreira/udacity-restapi-feed
+  frontend:
+    build:
+      context: ../../udacity-c2-frontend  
+    image: lmarquesmoreira/udacity-frontend:local
