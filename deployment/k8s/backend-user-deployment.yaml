@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    service: backend-user
+  name: backend-user
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        service: backend-user
+    spec:
+      containers:
+      - image: lmarquesmoreira/udacity-restapi-user
+        name: backend-user 
+        imagePullPolicy: Always  
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"      
+        env:
+        - name: URL
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: URL 
+        - name: JWT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: JWT_SECRET
+        - name: UDAGRAM_DATABASE_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DATABASE_DATABASE
+        - name: UDAGRAM_DATABASE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DATABASE_HOST
+        - name: UDAGRAM_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: UDAGRAM_DATABASE_PASSWORD
+        - name: UDAGRAM_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: UDAGRAM_DATABASE_USERNAME
+        - name: UDAGRAM_DATABASE_DIALECT
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: UDAGRAM_DATABASE_DIALECT  
+      restartPolicy: Always
+
+
