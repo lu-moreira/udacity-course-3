@@ -70,8 +70,8 @@ spec:
               key: UDAGRAM_DATABASE_USERNAME      
         - name: UDAGRAM_DATABASE_DIALECT
           valueFrom:
-            secretKeyRef:
-              name: env-secret
+            configMapKeyRef:
+              name: env-config
               key: UDAGRAM_DATABASE_DIALECT  
         volumeMounts:
         - name: aws-secret
