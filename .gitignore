@@ -50,3 +50,6 @@ udacity-c2-restapi-user/node_modules/
 udacity-c2-frontend/www/
 udacity-c2-restapi-feed/www/
 udacity-c2-restapi-user/www/
+
+# Deployment
+deployment/k8s/env/
